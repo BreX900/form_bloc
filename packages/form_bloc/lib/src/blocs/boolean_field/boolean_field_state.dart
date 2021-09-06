@@ -3,7 +3,7 @@ part of '../field/field_bloc.dart';
 class BooleanFieldBlocState<ExtraData>
     extends FieldBlocState<bool, bool, ExtraData?> {
   BooleanFieldBlocState({
-    required bool? value,
+    required bool value,
     required String? error,
     required bool isInitial,
     required Suggestions<bool>? suggestions,
@@ -12,7 +12,7 @@ class BooleanFieldBlocState<ExtraData>
     FormBloc? formBloc,
     String? name,
     List additionalProps = const <dynamic>[],
-    dynamic Function(bool? value)? toJson,
+    dynamic Function(bool value)? toJson,
     ExtraData? extraData,
   }) : super(
           value: value,
@@ -28,8 +28,8 @@ class BooleanFieldBlocState<ExtraData>
         );
 
   @override
-  FieldBlocState<bool, bool, ExtraData?> copyWith(
-      {Optional<bool?>? value,
+  BooleanFieldBlocState<ExtraData> copyWith(
+      {Optional<bool>? value,
       Optional<String>? error,
       bool? isInitial,
       Optional<Suggestions<bool>>? suggestions,
@@ -38,7 +38,7 @@ class BooleanFieldBlocState<ExtraData>
       Optional<FormBloc?>? formBloc,
       Optional<ExtraData?>? extraData}) {
     return BooleanFieldBlocState(
-      value: value == null ? this.value : value.orNull,
+      value: value == null ? this.value : value.value,
       error: error == null ? this.error : error.orNull,
       isInitial: isInitial ?? this.isInitial,
       suggestions: suggestions == null ? this.suggestions : suggestions.orNull,
