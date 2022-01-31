@@ -15,6 +15,9 @@ enum DateTimeFieldBlocBuilderBaseType {
   both,
 }
 
+typedef DatePicker = Future<DateTime> Function(BuildContext context, DateTime initialDate);
+typedef TimePicker = Future<TimeOfDay> Function(BuildContext context, TimeOfDay initialTime);
+
 /// A material design date picker.
 class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   const DateTimeFieldBlocBuilderBase({
@@ -45,6 +48,8 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
     this.textStyle,
     this.textColor,
     this.textAlign,
+    this.datePicker,
+    this.timePicker,
   }) : super(key: key);
 
   final DateTimeFieldBlocBuilderBaseType type;
@@ -106,9 +111,11 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   final RouteSettings? routeSettings;
   final TimeOfDay initialTime;
 
+  final DatePicker? datePicker;
+  final TimePicker? timePicker;
+
   @override
-  _DateTimeFieldBlocBuilderBaseState createState() =>
-      _DateTimeFieldBlocBuilderBaseState();
+  _DateTimeFieldBlocBuilderBaseState createState() => _DateTimeFieldBlocBuilderBaseState();
 
   DateTimeFieldTheme themeStyleOf(BuildContext context) {
     final theme = Theme.of(context);
@@ -135,8 +142,7 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   }
 }
 
-class _DateTimeFieldBlocBuilderBaseState<T>
-    extends State<DateTimeFieldBlocBuilderBase<T>> {
+class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuilderBase<T>> {
   final DatePickerMode initialDatePickerMode = DatePickerMode.day;
 
   final FocusNode _focusNode = FocusNode();
@@ -200,14 +206,12 @@ class _DateTimeFieldBlocBuilderBaseState<T>
         singleFieldBloc: widget.dateTimeFieldBloc,
         animateWhenCanShow: widget.animateWhenCanShow,
         builder: (_, __) {
-          return BlocBuilder<InputFieldBloc<T, dynamic>,
-              InputFieldBlocState<T, dynamic>>(
+          return BlocBuilder<InputFieldBloc<T, dynamic>, InputFieldBlocState<T, dynamic>>(
             bloc: widget.dateTimeFieldBloc,
             builder: (context, state) {
               final isEnabled = fieldBlocIsEnabled(
                 isEnabled: widget.isEnabled,
-                enableOnlyWhenFormBlocCanSubmit:
-                    widget.enableOnlyWhenFormBlocCanSubmit,
+                enableOnlyWhenFormBlocCanSubmit: widget.enableOnlyWhenFormBlocCanSubmit,
                 fieldBlocState: state,
               );
 
@@ -227,9 +231,7 @@ class _DateTimeFieldBlocBuilderBaseState<T>
                 );
               } else {
                 child = Text(
-                  state.value != null
-                      ? _tryFormat(state.value, widget.format)
-                      : '',
+                  state.value != null ? _tryFormat(state.value, widget.format) : '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -247,10 +249,8 @@ class _DateTimeFieldBlocBuilderBaseState<T>
                 child: GestureDetector(
                   onTap: !isEnabled ? null : () => _showPicker(context),
                   child: InputDecorator(
-                    decoration:
-                        _buildDecoration(context, fieldTheme, state, isEnabled),
-                    isEmpty: state.value == null &&
-                        widget.decoration.hintText == null,
+                    decoration: _buildDecoration(context, fieldTheme, state, isEnabled),
+                    isEmpty: state.value == null && widget.decoration.hintText == null,
                     child: child,
                   ),
                 ),
@@ -263,10 +263,13 @@ class _DateTimeFieldBlocBuilderBaseState<T>
   }
 
   Future<DateTime?> _showDatePicker(BuildContext context) async {
+    final initialDate = widget.dateTimeFieldBloc.state.value as DateTime? ?? widget.initialDate!;
+
+    if (widget.datePicker != null) return widget.datePicker!(context, initialDate);
+
     return await showDatePicker(
       context: context,
-      initialDate: widget.dateTimeFieldBloc.state.value as DateTime? ??
-          widget.initialDate!,
+      initialDate: initialDate,
       firstDate: widget.firstDate!,
       lastDate: widget.lastDate!,
       useRootNavigator: widget.useRootNavigator,
@@ -284,8 +287,7 @@ class _DateTimeFieldBlocBuilderBaseState<T>
       return widget.initialTime;
     }
     if (widget.type == DateTimeFieldBlocBuilderBaseType.time) {
-      return widget.dateTimeFieldBloc.state.value as TimeOfDay? ??
-          widget.initialTime;
+      return widget.dateTimeFieldBloc.state.value as TimeOfDay? ?? widget.initialTime;
     }
     return TimeOfDay.fromDateTime(
       widget.dateTimeFieldBloc.state.value as DateTime? ?? DateTime.now(),
@@ -293,6 +295,7 @@ class _DateTimeFieldBlocBuilderBaseState<T>
   }
 
   Future<TimeOfDay?> _showTimePicker(BuildContext context) async {
+    if (widget.timePicker != null) return widget.timePicker!(context, _initialTime());
     return await showTimePicker(
       context: context,
       useRootNavigator: widget.useRootNavigator,
@@ -361,3 +364,80 @@ class _DateTimeFieldBlocBuilderBaseState<T>
     );
   }
 }
+
+// class MaterialDatePicker {
+//   final DateTime firstDate;
+//   final DateTime lastDate;
+//   final DateTime? currentDate;
+//   final DatePickerEntryMode initialEntryMode;
+//   final SelectableDayPredicate? selectableDayPredicate;
+//   final String? helpText;
+//   final String? cancelText;
+//   final String? confirmText;
+//   final Locale? locale;
+//   final bool useRootNavigator;
+//   final RouteSettings? routeSettings;
+//   final TextDirection? textDirection;
+//   final TransitionBuilder? builder;
+//   final DatePickerMode initialDatePickerMode;
+//   final String? errorFormatText;
+//   final String? errorInvalidText;
+//   final String? fieldHintText;
+//   final String? fieldLabelText;
+//
+//   const MaterialDatePicker({
+//     required this.firstDate,
+//     required this.lastDate,
+//     this.currentDate,
+//     this.initialEntryMode = DatePickerEntryMode.calendar,
+//     this.selectableDayPredicate,
+//     this.helpText,
+//     this.cancelText,
+//     this.confirmText,
+//     this.locale,
+//     this.useRootNavigator = true,
+//     this.routeSettings,
+//     this.textDirection,
+//     this.builder,
+//     this.initialDatePickerMode = DatePickerMode.day,
+//     this.errorFormatText,
+//     this.errorInvalidText,
+//     this.fieldHintText,
+//     this.fieldLabelText,
+//   });
+//
+//   Future<DateTime?> call(BuildContext context, DateTime initialDate) {
+//     return showDatePicker(
+//       context: context,
+//       initialDate: initialDate,
+//       firstDate: firstDate,
+//       lastDate: lastDate,
+//       currentDate: currentDate,
+//       initialEntryMode: initialEntryMode,
+//       selectableDayPredicate: selectableDayPredicate,
+//       helpText: helpText,
+//       cancelText: cancelText,
+//       confirmText: confirmText,
+//       locale: locale,
+//       useRootNavigator: useRootNavigator,
+//       routeSettings: routeSettings,
+//       textDirection: textDirection,
+//       builder: builder,
+//       initialDatePickerMode: initialDatePickerMode,
+//       errorFormatText: errorFormatText,
+//       errorInvalidText: errorInvalidText,
+//       fieldHintText: fieldHintText,
+//       fieldLabelText: fieldLabelText,
+//     );
+//   }
+// }
+//
+//
+// class TimePickerData {
+//   final TimeOfDay initialTime;
+//
+//   const TimePickerData({
+//     required this.initialTime,
+//   });
+//
+// }
