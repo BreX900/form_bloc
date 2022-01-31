@@ -31,6 +31,7 @@ class TimeFieldBlocBuilder extends StatelessWidget {
     this.textAlign,
     this.textStyle,
     this.textColor,
+    this.timePicker,
   }) : super(key: key);
 
   /// {@macro flutter_form_bloc.FieldBlocBuilder.fieldBloc}
@@ -88,6 +89,8 @@ class TimeFieldBlocBuilder extends StatelessWidget {
   /// Defaults `const Icon(Icons.clear)`
   final Widget? clearIcon;
 
+  final TimePicker? timePicker;
+
   @override
   Widget build(BuildContext context) {
     return DateTimeFieldBlocBuilderBase<TimeOfDay?>(
@@ -117,6 +120,7 @@ class TimeFieldBlocBuilder extends StatelessWidget {
       textAlign: textAlign,
       textStyle: textStyle,
       textColor: textColor,
+      timePicker: timePicker,
     );
   }
 }
