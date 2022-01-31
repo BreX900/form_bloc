@@ -15,8 +15,8 @@ enum DateTimeFieldBlocBuilderBaseType {
   both,
 }
 
-typedef DatePicker = Future<DateTime> Function(BuildContext context, DateTime initialDate);
-typedef TimePicker = Future<TimeOfDay> Function(BuildContext context, TimeOfDay initialTime);
+typedef DatePicker = Future<DateTime?> Function(BuildContext context, DateTime initialDate);
+typedef TimePicker = Future<TimeOfDay?> Function(BuildContext context, TimeOfDay initialTime);
 
 /// A material design date picker.
 class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
