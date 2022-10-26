@@ -404,7 +404,7 @@ abstract class SingleFieldBloc<
       emit(state.copyWith(
         isDirty: true,
       ) as State);
-    } else if (state.hasError) {
+    } else if (!state.isValidated || state.hasError) {
       _validate(shouldDirty: true);
     }
     return _isValid();
