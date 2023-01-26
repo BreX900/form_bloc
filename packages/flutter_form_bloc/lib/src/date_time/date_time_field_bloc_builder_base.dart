@@ -13,6 +13,11 @@ enum DateTimeFieldBlocBuilderBaseType {
   both,
 }
 
+typedef DatePicker = Future<DateTime?> Function(
+    BuildContext context, DateTime initialDate);
+typedef TimePicker = Future<TimeOfDay?> Function(
+    BuildContext context, TimeOfDay initialTime);
+
 /// A material design date picker.
 class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   const DateTimeFieldBlocBuilderBase({
@@ -43,6 +48,8 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
     this.textStyle,
     this.textColor,
     this.textAlign,
+    this.datePicker,
+    this.timePicker,
   })  : assert(enableOnlyWhenFormBlocCanSubmit != null),
         assert(isEnabled != null),
         super(key: key);
@@ -105,6 +112,9 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   final bool useRootNavigator;
   final RouteSettings? routeSettings;
   final TimeOfDay initialTime;
+
+  final DatePicker? datePicker;
+  final TimePicker? timePicker;
 
   @override
   _DateTimeFieldBlocBuilderBaseState createState() =>
@@ -255,6 +265,13 @@ class _DateTimeFieldBlocBuilderBaseState<T>
   }
 
   Future<DateTime?> _showDatePicker(BuildContext context) async {
+    final initialDate = widget.dateTimeFieldBloc.state.value as DateTime? ??
+        widget.initialDate!;
+
+    if (widget.datePicker != null) {
+      return widget.datePicker!(context, initialDate);
+    }
+
     return await showDatePicker(
       context: context,
       initialDate: widget.dateTimeFieldBloc.state.value as DateTime? ??
@@ -285,6 +302,10 @@ class _DateTimeFieldBlocBuilderBaseState<T>
   }
 
   Future<TimeOfDay?> _showTimePicker(BuildContext context) async {
+    if (widget.timePicker != null) {
+      return widget.timePicker!(context, _initialTime());
+    }
+
     return await showTimePicker(
       context: context,
       useRootNavigator: widget.useRootNavigator,
