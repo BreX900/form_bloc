@@ -702,7 +702,7 @@ class _TypeAheadFieldState<T> extends State<TypeAheadField<T>>
           this._suggestionsBox?.open();
         }
 
-        ScrollableState? scrollableState = Scrollable.maybeOf(context);
+        final scrollableState = Scrollable.maybeOf(context);
         if (scrollableState != null) {
           scrollableState.position.isScrollingNotifier.addListener(() {
             bool isScrolling =
