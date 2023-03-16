@@ -771,17 +771,12 @@ class MultiFieldBloc<ExtraData, TState extends MultiFieldBlocState<ExtraData>>
   }
 
   static bool deepContains(Iterable<FieldBloc> fieldBlocs, FieldBloc target) {
-    if (fieldBlocs.isEmpty) return false;
-
     for (final fieldBloc in fieldBlocs) {
+      if (fieldBloc.state.name == target.state.name) return true;
+
       if (fieldBloc is MultiFieldBloc) {
-        final contains =
-            MultiFieldBloc.deepContains(fieldBloc.state.flatFieldBlocs, target);
-        if (contains) {
-          return true;
-        }
-      } else if (fieldBloc.state.name == target.state.name) {
-        return true;
+        final contains = deepContains(fieldBloc.state.flatFieldBlocs, target);
+        if (contains) return true;
       }
     }
     return false;
