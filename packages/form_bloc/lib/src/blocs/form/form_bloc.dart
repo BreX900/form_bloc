@@ -483,7 +483,7 @@ abstract class FormBloc<SuccessResponse, FailureResponse>
   void _onRemoveFieldBlocs({
     int? step,
     required Iterable<FieldBloc> fieldBlocs,
-  }) async {
+  }) {
     fieldBlocs = fieldBlocs.where((fieldBloc) {
       return state.contains(fieldBloc, step: step, deep: false);
     });

@@ -119,10 +119,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// Returns `true` if the [FormBloc] contains [fieldBloc]
   bool contains(FieldBloc fieldBloc, {int? step, bool deep = true}) {
     final fieldBlocs = (flatFieldBlocs(step) ?? const []);
-    if (deep) {
-      return fieldBlocs.any((fb) => fb == fieldBloc);
-    }
-    return MultiFieldBloc.deepContains(fieldBlocs, fieldBloc);
+    if (deep) return MultiFieldBloc.deepContains(fieldBlocs, fieldBloc);
+    return fieldBlocs.any((fb) => fb.name == fieldBloc.name);
   }
 
   /// Returns the value of [FieldBloc] that has this [name].
