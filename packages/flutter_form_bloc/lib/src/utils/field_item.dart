@@ -8,6 +8,8 @@ typedef FieldItemBuilder<T> = FieldItem Function(BuildContext context, T value);
 
 /// Class that defines the properties of an item contained in a field
 class FieldItem extends StatelessWidget {
+  final bool expanded;
+
   /// Whether or not a user can select this menu item.
   final bool isEnabled;
 
@@ -24,6 +26,7 @@ class FieldItem extends StatelessWidget {
 
   const FieldItem({
     Key? key,
+    this.expanded = true,
     this.isEnabled = true,
     this.alignment = AlignmentDirectional.centerStart,
     this.onTap,
@@ -32,10 +35,11 @@ class FieldItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final child = Container(
       constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
       alignment: AlignmentDirectional.centerStart,
-      child: child,
+      child: this.child,
     );
+    return expanded ? Expanded(child: child) : child;
   }
 }
