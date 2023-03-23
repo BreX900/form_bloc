@@ -59,8 +59,7 @@ class _CanShowFieldBlocBuilderState extends State<CanShowFieldBlocBuilder>
     if (widget.animate != oldWidget.animate) {
       _initVisibility();
     }
-    if (widget.fieldBloc.state.hasFormBloc !=
-        oldWidget.fieldBloc.state.hasFormBloc) {
+    if (widget.fieldBloc.name != oldWidget.fieldBloc.name) {
       _initVisibility();
     }
   }
@@ -75,20 +74,14 @@ class _CanShowFieldBlocBuilderState extends State<CanShowFieldBlocBuilder>
     final canShow = widget.fieldBloc.state.hasFormBloc;
 
     _canShow = canShow;
-
-    if (widget.animate) {
-      _controller.value = canShow ? 1.0 : 0.0;
-    }
+    _controller.value = canShow ? 1.0 : 0.0;
   }
 
   void _changeVisibility(bool canShow) {
     if (!_showOnFirstFrame) return;
 
-    if (widget.animate) {
-      _updateAnimation(canShow).whenComplete(() => _updateCanShow(canShow));
-    } else {
-      _updateCanShow(canShow);
-    }
+    _updateAnimation(canShow);
+    _updateCanShow(canShow);
   }
 
   void _updateCanShow(bool canShow) {
@@ -98,11 +91,11 @@ class _CanShowFieldBlocBuilderState extends State<CanShowFieldBlocBuilder>
     });
   }
 
-  TickerFuture _updateAnimation(bool canShow) {
+  void _updateAnimation(bool canShow) {
     if (canShow) {
-      return _controller.forward();
+      _controller.forward();
     } else {
-      return _controller.reverse();
+      _controller.reverse();
     }
   }
 
