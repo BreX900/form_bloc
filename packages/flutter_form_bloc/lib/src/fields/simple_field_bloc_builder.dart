@@ -26,16 +26,16 @@ class SimpleFieldBlocBuilder extends StatelessWidget {
       fieldBloc: singleFieldBloc,
       animate: animateWhenCanShow,
       builder: (context, canShow) {
-        final field = builder(context, canShow);
+        if (!canShow && !animateWhenCanShow) return const SizedBox.shrink();
 
-        if (!canShow) {
-          return field;
-        }
+        final child = builder(context, canShow);
+
+        if (!canShow) return child;
 
         return ScrollableFieldBlocTarget(
           singleFieldBloc: singleFieldBloc,
           canScroll: focusOnValidationFailed,
-          child: field,
+          child: child,
         );
       },
     );

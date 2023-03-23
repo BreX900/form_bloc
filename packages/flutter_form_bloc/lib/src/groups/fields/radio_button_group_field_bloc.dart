@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_bloc/src/features/appear/can_show_field_bloc_builder.dart';
+import 'package:flutter_form_bloc/src/fields/simple_field_bloc_builder.dart';
 import 'package:flutter_form_bloc/src/groups/widgets/group_view.dart';
 import 'package:flutter_form_bloc/src/groups/widgets/item_group_tile.dart';
 import 'package:flutter_form_bloc/src/theme/field_theme_resolver.dart';
@@ -122,9 +122,9 @@ class RadioButtonGroupFieldBlocBuilder<Value> extends StatelessWidget {
       data: Theme.of(context).copyWith(
         radioTheme: fieldTheme.radioTheme,
       ),
-      child: CanShowFieldBlocBuilder(
-        fieldBloc: selectFieldBloc,
-        animate: animateWhenCanShow,
+      child: SimpleFieldBlocBuilder(
+        singleFieldBloc: selectFieldBloc,
+        animateWhenCanShow: animateWhenCanShow,
         builder: (_, __) {
           return BlocBuilder<SelectFieldBloc<Value, dynamic>,
               SelectFieldBlocState<Value, dynamic>>(
