@@ -18,7 +18,7 @@ dependencies:
   form_bloc: #^0.30.0
     git:
       url: https://github.com/BreX900/form_bloc
-      ref: enchant_date_time_builders
+      ref: 0.30.3
       path: packages/form_bloc
   equatable: ^2.0.3
   rxdart: ^0.27.3
