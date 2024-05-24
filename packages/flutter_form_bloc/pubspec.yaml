@@ -13,12 +13,10 @@ dependencies:
     sdk: flutter
 
   flutter_bloc: ^8.0.1
-#  form_bloc:
-#    path: ../form_bloc
-  form_bloc: #^0.30.0
+  form_bloc:
     git:
       url: https://github.com/BreX900/form_bloc
-      ref: next_0.30.x
+      ref: 0.31.0
       path: packages/form_bloc
   equatable: ^2.0.3
   rxdart: ^0.27.3
