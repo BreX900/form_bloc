@@ -18,16 +18,19 @@ dependencies:
   form_bloc: #^0.30.0
     git:
       url: https://github.com/BreX900/form_bloc
-      ref: 0.30.3
+      ref: next_0.30.x
       path: packages/form_bloc
   equatable: ^2.0.3
   rxdart: ^0.27.3
   flutter_keyboard_visibility: ^5.4.1
   collection: ^1.15.0
-  intl: ^0.18.0
+  intl: '>=0.18.0 <0.20.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+dependency_overrides:
+  form_bloc: { path: ../form_bloc }
