@@ -1,3 +1,8 @@
+# 0.31.1
+
+* Update rxdart constraints to `>=0.27.0 <0.29.0`
+* Update uuid constraints to `>=3.0.0 <5.0.0`
+
 # 0.31.0
 
 * Update sdk constraints to `>=2.12.0 <4.0.0`

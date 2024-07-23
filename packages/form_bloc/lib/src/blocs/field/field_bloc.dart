@@ -385,7 +385,7 @@ abstract class SingleFieldBloc<
 
   /// {@template form_bloc.FieldBloc.updateExtraData}
   /// Updates the `extraData` of the current state.
-  /// {@endtemplate form_bloc.FieldBloc.updateExtraData}
+  /// {@endtemplate}
   void updateExtraData(ExtraData extraData) {
     emit(state.copyWith(
       extraData: Param(extraData),
