@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:form_bloc/form_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../utils/my_bloc_delegate.dart';
 import '../utils/states.dart';
 import '../utils/when_bloc.dart';
 
@@ -156,6 +154,7 @@ void main() {
         final formBloc = _FormBlocImpl();
         final fieldBloc = _MockInputFieldBloc();
 
+        when(() => fieldBloc.name).thenReturn('fieldBlocName');
         whenBloc(
           fieldBloc,
           initialState: createInputState<dynamic, dynamic>(
