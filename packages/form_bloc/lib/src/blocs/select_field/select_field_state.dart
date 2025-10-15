@@ -20,20 +20,20 @@ class SelectFieldBlocState<Value, ExtraData>
     dynamic Function(Value? value)? toJson,
     ExtraData? extraData,
   }) : super(
-          isValueChanged: isValueChanged,
-          initialValue: initialValue,
-          updatedValue: updatedValue,
-          value: value,
-          error: error,
-          isDirty: isDirty,
-          suggestions: suggestions,
-          isValidated: isValidated,
-          isValidating: isValidating,
-          formBloc: formBloc,
-          name: name,
-          toJson: toJson,
-          extraData: extraData,
-        );
+         isValueChanged: isValueChanged,
+         initialValue: initialValue,
+         updatedValue: updatedValue,
+         value: value,
+         error: error,
+         isDirty: isDirty,
+         suggestions: suggestions,
+         isValidated: isValidated,
+         isValidating: isValidating,
+         formBloc: formBloc,
+         name: name,
+         toJson: toJson,
+         extraData: extraData,
+       );
 
   @override
   SelectFieldBlocState<Value, ExtraData> copyWith({

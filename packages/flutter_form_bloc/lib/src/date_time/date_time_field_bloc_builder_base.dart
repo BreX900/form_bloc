@@ -9,16 +9,12 @@ import 'package:flutter_form_bloc/src/utils/utils.dart';
 import 'package:form_bloc/form_bloc.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-enum DateTimeFieldBlocBuilderBaseType {
-  date,
-  time,
-  both,
-}
+enum DateTimeFieldBlocBuilderBaseType { date, time, both }
 
-typedef DatePicker = Future<DateTime?> Function(
-    BuildContext context, DateTime initialDate);
-typedef TimePicker = Future<TimeOfDay?> Function(
-    BuildContext context, TimeOfDay initialTime);
+typedef DatePicker =
+    Future<DateTime?> Function(BuildContext context, DateTime initialDate);
+typedef TimePicker =
+    Future<TimeOfDay?> Function(BuildContext context, TimeOfDay initialTime);
 
 /// A material design date picker.
 class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
@@ -134,7 +130,8 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
       textAlign: textAlign ?? fieldTheme.textAlign ?? TextAlign.start,
       showClearIcon: showClearIcon ?? fieldTheme.showClearIcon ?? true,
       clearSuffixButtonTheme: ClearSuffixButtonTheme(
-        visibleWithoutValue: cleanTheme.visibleWithoutValue ??
+        visibleWithoutValue:
+            cleanTheme.visibleWithoutValue ??
             formTheme.clearSuffixButtonTheme.visibleWithoutValue ??
             false,
         appearDuration: cleanTheme.appearDuration,
@@ -211,8 +208,10 @@ class _DateTimeFieldBlocBuilderBaseState<T>
         singleFieldBloc: widget.dateTimeFieldBloc,
         animateWhenCanShow: widget.animateWhenCanShow,
         builder: (_, __) {
-          return BlocBuilder<InputFieldBloc<T, dynamic>,
-              InputFieldBlocState<T, dynamic>>(
+          return BlocBuilder<
+            InputFieldBloc<T, dynamic>,
+            InputFieldBlocState<T, dynamic>
+          >(
             bloc: widget.dateTimeFieldBloc,
             builder: (context, state) {
               final isEnabled = fieldBlocIsEnabled(
@@ -258,9 +257,14 @@ class _DateTimeFieldBlocBuilderBaseState<T>
                 child: GestureDetector(
                   onTap: !isEnabled ? null : () => _showPicker(context),
                   child: InputDecorator(
-                    decoration:
-                        _buildDecoration(context, fieldTheme, state, isEnabled),
-                    isEmpty: state.value == null &&
+                    decoration: _buildDecoration(
+                      context,
+                      fieldTheme,
+                      state,
+                      isEnabled,
+                    ),
+                    isEmpty:
+                        state.value == null &&
                         widget.decoration.hintText == null,
                     child: child,
                   ),
@@ -274,7 +278,8 @@ class _DateTimeFieldBlocBuilderBaseState<T>
   }
 
   Future<DateTime?> _showDatePicker(BuildContext context) async {
-    final initialDate = widget.dateTimeFieldBloc.state.value as DateTime? ??
+    final initialDate =
+        widget.dateTimeFieldBloc.state.value as DateTime? ??
         widget.initialDate!;
 
     if (widget.datePicker != null) {
@@ -362,7 +367,8 @@ class _DateTimeFieldBlocBuilderBaseState<T>
         fieldBlocState: state,
         fieldBloc: widget.dateTimeFieldBloc,
       ),
-      suffixIcon: decoration.suffixIcon ??
+      suffixIcon:
+          decoration.suffixIcon ??
           (fieldTheme.showClearIcon!
               ? _buildClearSuffixButton(fieldTheme.clearSuffixButtonTheme)
               : null),

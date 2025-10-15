@@ -23,7 +23,7 @@ class FieldBlocUtils {
     final hasValidators = validators != null;
 
     if (hasValidators) {
-      for (var validator in validators!) {
+      for (var validator in validators) {
         error = validator(value);
         if (error != null) return error;
       }
@@ -50,9 +50,10 @@ class FieldBlocUtils {
 
     final hasAsyncValidators = asyncValidators != null;
 
-    var isValidating = !hasInitialStateError &&
+    var isValidating =
+        !hasInitialStateError &&
         hasAsyncValidators &&
-        asyncValidators!.isNotEmpty;
+        asyncValidators.isNotEmpty;
 
     return isValidating;
   }

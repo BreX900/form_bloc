@@ -20,20 +20,20 @@ class MultiSelectFieldBlocState<Value, ExtraData>
     dynamic Function(List<Value> value)? toJson,
     ExtraData? extraData,
   }) : super(
-          isValueChanged: isValueChanged,
-          initialValue: EquatableList(initialValue),
-          updatedValue: EquatableList(updatedValue),
-          value: EquatableList(value),
-          error: error,
-          isDirty: isDirty,
-          suggestions: suggestions,
-          isValidated: isValidated,
-          isValidating: isValidating,
-          formBloc: formBloc,
-          name: name,
-          toJson: toJson,
-          extraData: extraData,
-        );
+         isValueChanged: isValueChanged,
+         initialValue: EquatableList(initialValue),
+         updatedValue: EquatableList(updatedValue),
+         value: EquatableList(value),
+         error: error,
+         isDirty: isDirty,
+         suggestions: suggestions,
+         isValidated: isValidated,
+         isValidating: isValidating,
+         formBloc: formBloc,
+         name: name,
+         toJson: toJson,
+         extraData: extraData,
+       );
 
   @override
   MultiSelectFieldBlocState<Value, ExtraData> copyWith({

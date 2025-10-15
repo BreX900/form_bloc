@@ -77,10 +77,7 @@ void main() {
           extraData: 'This is extra data',
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.updateExtraData('This is extra data');
       });
@@ -96,9 +93,9 @@ void main() {
 
         final expectedUpdate =
             createListState<BooleanFieldBloc<Object>, String>(
-          name: 'list',
-          formBloc: formBloc,
-        );
+              name: 'list',
+              formBloc: formBloc,
+            );
 
         list.updateFormBloc(formBloc);
 
@@ -120,10 +117,10 @@ void main() {
 
         final expectedUpdate =
             createListState<BooleanFieldBloc<Object>, String>(
-          name: 'list',
-          fieldBlocs: [field],
-          formBloc: formBloc,
-        );
+              name: 'list',
+              fieldBlocs: [field],
+              formBloc: formBloc,
+            );
         final expectedBoolUpdate = createBooleanState<Object>(
           name: 'bool',
           value: false,
@@ -141,8 +138,9 @@ void main() {
         expect(field.state, expectedBoolUpdate);
 
         final expectedRemove = expectedUpdate.copyWith(formBloc: Param(null));
-        final expectedFieldRemove =
-            expectedBoolUpdate.copyWith(formBloc: Param(null));
+        final expectedFieldRemove = expectedBoolUpdate.copyWith(
+          formBloc: Param(null),
+        );
 
         list.removeFormBloc(formBloc);
 
@@ -159,10 +157,10 @@ void main() {
 
         final expectedUpdate =
             createListState<BooleanFieldBloc<Object>, String>(
-          name: 'list',
-          fieldBlocs: [field],
-          formBloc: formBloc,
-        );
+              name: 'list',
+              fieldBlocs: [field],
+              formBloc: formBloc,
+            );
         final expectedBoolUpdate = createBooleanState<Object>(
           name: 'bool',
           value: false,
