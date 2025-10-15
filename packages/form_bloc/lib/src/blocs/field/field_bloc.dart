@@ -161,8 +161,9 @@ abstract class SingleFieldBloc<
     required Stream<R> Function(State previous, State current) onData,
     void Function(State previous, State current, R result)? onFinish,
   }) {
+    // ignore: no_leading_underscores_for_local_identifiers
     final _onStart = onStart ?? (_, __) {};
-
+    // ignore: no_leading_underscores_for_local_identifiers
     final _onFinish = onFinish ?? (State p, State c, R r) {};
 
     return stream

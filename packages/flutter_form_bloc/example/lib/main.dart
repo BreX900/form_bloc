@@ -23,7 +23,7 @@ class App extends StatelessWidget {
       ),
       builder: (context, child) {
         return FormThemeProvider(
-          theme: FormTheme(
+          theme: const FormTheme(
             checkboxTheme: CheckboxFieldTheme(
               canTapItemTile: true,
             ),
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
           child: child!,
         );
       },
-      home: AllFieldsForm(),
+      home: const AllFieldsForm(),
     );
   }
 }
@@ -328,7 +328,10 @@ class LoadingDialog extends StatelessWidget {
         useRootNavigator: false,
         barrierDismissible: false,
         builder: (_) => LoadingDialog(key: key),
-      ).then((_) => FocusScope.of(context).requestFocus(FocusNode()));
+      ).then((_) {
+        if (!context.mounted) return;
+        FocusScope.of(context).requestFocus(FocusNode());
+      });
 
   static void hide(BuildContext context) => Navigator.pop(context);
 
@@ -336,8 +339,8 @@ class LoadingDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Center(
         child: Card(
           child: Container(

@@ -590,7 +590,7 @@ class TypeAheadField<T> extends StatefulWidget {
         super(key: key);
 
   @override
-  _TypeAheadFieldState<T> createState() => _TypeAheadFieldState<T>();
+  State<TypeAheadField<T>> createState() => _TypeAheadFieldState<T>();
 }
 
 class _TypeAheadFieldState<T> extends State<TypeAheadField<T>>
@@ -1738,6 +1738,7 @@ class _SuggestionsBox {
         timer += 170;
 
         if (widgetMounted &&
+            // ignore: use_build_context_synchronously
             (MediaQuery.of(context).viewInsets != initial ||
                 _findRootMediaQuery() != initialRootMediaQuery)) {
           return true;
