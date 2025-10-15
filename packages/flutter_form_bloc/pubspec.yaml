@@ -22,7 +22,7 @@ dependencies:
   rxdart: '>=0.27.0 <0.29.0'
   flutter_keyboard_visibility: ^6.0.0
   collection: ^1.15.0
-  intl: '>=0.18.0 <0.20.0'
+  intl: '>=0.18.0 <0.21.0'
 
 dev_dependencies:
   flutter_test:

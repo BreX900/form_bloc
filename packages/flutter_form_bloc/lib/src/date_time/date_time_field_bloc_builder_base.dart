@@ -15,8 +15,10 @@ enum DateTimeFieldBlocBuilderBaseType {
   both,
 }
 
-typedef DatePicker = Future<DateTime?> Function(BuildContext context, DateTime initialDate);
-typedef TimePicker = Future<TimeOfDay?> Function(BuildContext context, TimeOfDay initialTime);
+typedef DatePicker = Future<DateTime?> Function(
+    BuildContext context, DateTime initialDate);
+typedef TimePicker = Future<TimeOfDay?> Function(
+    BuildContext context, TimeOfDay initialTime);
 
 /// A material design date picker.
 class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
@@ -92,7 +94,7 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   /// {@macro flutter_form_bloc.FieldBlocBuilder.style}
   final TextStyle? textStyle;
 
-  final MaterialStateProperty<Color?>? textColor;
+  final WidgetStateProperty<Color?>? textColor;
 
   /// Defaults `true`
   final bool? showClearIcon;
@@ -115,7 +117,8 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   final TimePicker? timePicker;
 
   @override
-  _DateTimeFieldBlocBuilderBaseState createState() => _DateTimeFieldBlocBuilderBaseState();
+  State<DateTimeFieldBlocBuilderBase<T>> createState() =>
+      _DateTimeFieldBlocBuilderBaseState();
 
   DateTimeFieldTheme themeStyleOf(BuildContext context) {
     final theme = Theme.of(context);
@@ -142,7 +145,8 @@ class DateTimeFieldBlocBuilderBase<T> extends StatefulWidget {
   }
 }
 
-class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuilderBase<T>> {
+class _DateTimeFieldBlocBuilderBaseState<T>
+    extends State<DateTimeFieldBlocBuilderBase<T>> {
   final DatePickerMode initialDatePickerMode = DatePickerMode.day;
 
   final FocusNode _focusNode = FocusNode();
@@ -177,6 +181,7 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
       final date = await _showDatePicker(context);
 
       if (date != null) {
+        if (!context.mounted) return;
         final time = await _showTimePicker(context);
         result = _combine(date, time);
       }
@@ -206,12 +211,14 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
         singleFieldBloc: widget.dateTimeFieldBloc,
         animateWhenCanShow: widget.animateWhenCanShow,
         builder: (_, __) {
-          return BlocBuilder<InputFieldBloc<T, dynamic>, InputFieldBlocState<T, dynamic>>(
+          return BlocBuilder<InputFieldBloc<T, dynamic>,
+              InputFieldBlocState<T, dynamic>>(
             bloc: widget.dateTimeFieldBloc,
             builder: (context, state) {
               final isEnabled = fieldBlocIsEnabled(
                 isEnabled: widget.isEnabled,
-                enableOnlyWhenFormBlocCanSubmit: widget.enableOnlyWhenFormBlocCanSubmit,
+                enableOnlyWhenFormBlocCanSubmit:
+                    widget.enableOnlyWhenFormBlocCanSubmit,
                 fieldBlocState: state,
               );
 
@@ -231,7 +238,9 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
                 );
               } else {
                 child = Text(
-                  state.value != null ? _tryFormat(state.value, widget.format) : '',
+                  state.value != null
+                      ? _tryFormat(state.value, widget.format)
+                      : '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -249,8 +258,10 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
                 child: GestureDetector(
                   onTap: !isEnabled ? null : () => _showPicker(context),
                   child: InputDecorator(
-                    decoration: _buildDecoration(context, fieldTheme, state, isEnabled),
-                    isEmpty: state.value == null && widget.decoration.hintText == null,
+                    decoration:
+                        _buildDecoration(context, fieldTheme, state, isEnabled),
+                    isEmpty: state.value == null &&
+                        widget.decoration.hintText == null,
                     child: child,
                   ),
                 ),
@@ -263,9 +274,12 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
   }
 
   Future<DateTime?> _showDatePicker(BuildContext context) async {
-    final initialDate = widget.dateTimeFieldBloc.state.value as DateTime? ?? widget.initialDate!;
+    final initialDate = widget.dateTimeFieldBloc.state.value as DateTime? ??
+        widget.initialDate!;
 
-    if (widget.datePicker != null) return widget.datePicker!(context, initialDate);
+    if (widget.datePicker != null) {
+      return widget.datePicker!(context, initialDate);
+    }
 
     return await showDatePicker(
       context: context,
@@ -287,7 +301,8 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
       return widget.initialTime;
     }
     if (widget.type == DateTimeFieldBlocBuilderBaseType.time) {
-      return widget.dateTimeFieldBloc.state.value as TimeOfDay? ?? widget.initialTime;
+      return widget.dateTimeFieldBloc.state.value as TimeOfDay? ??
+          widget.initialTime;
     }
     return TimeOfDay.fromDateTime(
       widget.dateTimeFieldBloc.state.value as DateTime? ?? DateTime.now(),
@@ -295,7 +310,9 @@ class _DateTimeFieldBlocBuilderBaseState<T> extends State<DateTimeFieldBlocBuild
   }
 
   Future<TimeOfDay?> _showTimePicker(BuildContext context) async {
-    if (widget.timePicker != null) return widget.timePicker!(context, _initialTime());
+    if (widget.timePicker != null) {
+      return widget.timePicker!(context, _initialTime());
+    }
     return await showTimePicker(
       context: context,
       useRootNavigator: widget.useRootNavigator,

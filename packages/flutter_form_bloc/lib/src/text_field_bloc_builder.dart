@@ -408,9 +408,9 @@ class TextFieldBlocBuilder extends StatefulWidget {
   /// {@template flutter_form_bloc.FieldBlocBuilder.textColor}
   /// It is the color of the text
   ///
-  /// You can receive this state: [MaterialState.disabled]
+  /// You can receive this state: [WidgetState.disabled]
   /// {@endtemplate}
-  final MaterialStateProperty<Color?>? textColor;
+  final WidgetStateProperty<Color?>? textColor;
 
   /// {@macro flutter.widgets.editableText.strutStyle}
   final StrutStyle? strutStyle;
@@ -738,7 +738,7 @@ class TextFieldBlocBuilder extends StatefulWidget {
   }
 
   @override
-  _TextFieldBlocBuilderState createState() => _TextFieldBlocBuilderState();
+  State<TextFieldBlocBuilder> createState() => _TextFieldBlocBuilderState();
 }
 
 class _TextFieldBlocBuilderState extends State<TextFieldBlocBuilder> {
