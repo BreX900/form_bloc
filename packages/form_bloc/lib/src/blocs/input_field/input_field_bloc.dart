@@ -1,8 +1,14 @@
 part of '../field/field_bloc.dart';
 
 /// A `FieldBloc` used for any type, for example `DateTime` or `File`.
-class InputFieldBloc<Value, ExtraData> extends SingleFieldBloc<Value, Value,
-    InputFieldBlocState<Value, ExtraData>, ExtraData?> {
+class InputFieldBloc<Value, ExtraData>
+    extends
+        SingleFieldBloc<
+          Value,
+          Value,
+          InputFieldBlocState<Value, ExtraData>,
+          ExtraData?
+        > {
   /// ## InputFieldBloc<Value, ExtraData>
   ///
   /// ### Properties:
@@ -46,35 +52,35 @@ class InputFieldBloc<Value, ExtraData> extends SingleFieldBloc<Value, Value,
     dynamic Function(Value value)? toJson,
     ExtraData? extraData,
   }) : super(
-          validators: validators,
-          asyncValidators: asyncValidators,
-          asyncValidatorDebounceTime: asyncValidatorDebounceTime,
-          initialState: InputFieldBlocState(
-            isValueChanged: false,
-            initialValue: initialValue,
-            updatedValue: initialValue,
-            value: initialValue,
-            error: FieldBlocUtils.getInitialStateError(
-              validators: validators,
-              value: initialValue,
-            ),
-            isDirty: false,
-            suggestions: suggestions,
-            isValidated: FieldBlocUtils.getInitialIsValidated(
-              FieldBlocUtils.getInitialStateIsValidating(
-                asyncValidators: asyncValidators,
-                validators: validators,
-                value: initialValue,
-              ),
-            ),
-            isValidating: FieldBlocUtils.getInitialStateIsValidating(
-              asyncValidators: asyncValidators,
-              validators: validators,
-              value: initialValue,
-            ),
-            name: FieldBlocUtils.generateName(name),
-            toJson: toJson,
-            extraData: extraData,
-          ),
-        );
+         validators: validators,
+         asyncValidators: asyncValidators,
+         asyncValidatorDebounceTime: asyncValidatorDebounceTime,
+         initialState: InputFieldBlocState(
+           isValueChanged: false,
+           initialValue: initialValue,
+           updatedValue: initialValue,
+           value: initialValue,
+           error: FieldBlocUtils.getInitialStateError(
+             validators: validators,
+             value: initialValue,
+           ),
+           isDirty: false,
+           suggestions: suggestions,
+           isValidated: FieldBlocUtils.getInitialIsValidated(
+             FieldBlocUtils.getInitialStateIsValidating(
+               asyncValidators: asyncValidators,
+               validators: validators,
+               value: initialValue,
+             ),
+           ),
+           isValidating: FieldBlocUtils.getInitialStateIsValidating(
+             asyncValidators: asyncValidators,
+             validators: validators,
+             value: initialValue,
+           ),
+           name: FieldBlocUtils.generateName(name),
+           toJson: toJson,
+           extraData: extraData,
+         ),
+       );
 }

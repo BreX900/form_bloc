@@ -12,12 +12,12 @@ class ListFieldBlocState<T extends FieldBloc, ExtraData>
     required ExtraData? extraData,
     required this.fieldBlocs,
   }) : super(
-          formBloc: formBloc,
-          name: name,
-          isValidating: isValidating,
-          isValid: isValid,
-          extraData: extraData,
-        );
+         formBloc: formBloc,
+         name: name,
+         isValidating: isValidating,
+         isValid: isValid,
+         extraData: extraData,
+       );
 
   @override
   ListFieldBlocState<T, ExtraData> copyWith({
@@ -54,14 +54,16 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
     String? name,
     List<T> fieldBlocs = const [],
     ExtraData? extraData,
-  }) : super(ListFieldBlocState(
-          name: name ?? Uuid().v1(),
-          formBloc: null,
-          isValidating: MultiFieldBloc.areFieldBlocsValidating(fieldBlocs),
-          isValid: MultiFieldBloc.areFieldBlocsValid(fieldBlocs),
-          extraData: extraData,
-          fieldBlocs: fieldBlocs,
-        ));
+  }) : super(
+         ListFieldBlocState(
+           name: name ?? Uuid().v1(),
+           formBloc: null,
+           isValidating: MultiFieldBloc.areFieldBlocsValidating(fieldBlocs),
+           isValid: MultiFieldBloc.areFieldBlocsValid(fieldBlocs),
+           extraData: extraData,
+           fieldBlocs: fieldBlocs,
+         ),
+       );
 
   List<T> get value => state.fieldBlocs;
 
@@ -73,11 +75,13 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
     if (fieldBlocs.isNotEmpty) {
       final nextFieldBlocs = [...state.fieldBlocs, ...fieldBlocs];
 
-      emit(state.copyWith(
-        isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
-        isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
-        fieldBlocs: nextFieldBlocs,
-      ));
+      emit(
+        state.copyWith(
+          isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
+          isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
+          fieldBlocs: nextFieldBlocs,
+        ),
+      );
 
       FormBlocUtils.updateFormBloc(
         fieldBlocs: fieldBlocs,
@@ -93,11 +97,13 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
       final nextFieldBlocs = [...state.fieldBlocs];
       final fieldBlocRemoved = nextFieldBlocs.removeAt(index);
 
-      emit(state.copyWith(
-        isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
-        isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
-        fieldBlocs: nextFieldBlocs,
-      ));
+      emit(
+        state.copyWith(
+          isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
+          isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
+          fieldBlocs: nextFieldBlocs,
+        ),
+      );
 
       FormBlocUtils.removeFormBloc(
         fieldBlocs: [fieldBlocRemoved],
@@ -127,11 +133,13 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
 
     if (fieldBlocsRemoved.isEmpty) return;
 
-    emit(state.copyWith(
-      isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
-      isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
-      fieldBlocs: nextFieldBlocs,
-    ));
+    emit(
+      state.copyWith(
+        isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
+        isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
+        fieldBlocs: nextFieldBlocs,
+      ),
+    );
 
     FormBlocUtils.removeFormBloc(
       fieldBlocs: fieldBlocsRemoved,
@@ -150,11 +158,13 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
 
       nextFieldBlocs.insertAll(index, fieldBlocs);
 
-      emit(state.copyWith(
-        isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
-        isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
-        fieldBlocs: nextFieldBlocs,
-      ));
+      emit(
+        state.copyWith(
+          isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
+          isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
+          fieldBlocs: nextFieldBlocs,
+        ),
+      );
 
       FormBlocUtils.updateFormBloc(
         fieldBlocs: fieldBlocs,
@@ -174,11 +184,13 @@ class ListFieldBloc<T extends FieldBloc, ExtraData>
       formBloc: state.formBloc,
     );
 
-    emit(state.copyWith(
-      isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
-      isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
-      fieldBlocs: nextFieldBlocs,
-    ));
+    emit(
+      state.copyWith(
+        isValidating: MultiFieldBloc.areFieldBlocsValidating(nextFieldBlocs),
+        isValid: MultiFieldBloc.areFieldBlocsValid(nextFieldBlocs),
+        fieldBlocs: nextFieldBlocs,
+      ),
+    );
 
     FormBlocUtils.updateFormBloc(
       fieldBlocs: fieldBlocs,

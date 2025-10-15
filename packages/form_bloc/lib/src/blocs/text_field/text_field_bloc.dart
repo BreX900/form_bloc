@@ -4,8 +4,14 @@ part of '../field/field_bloc.dart';
 /// it is also used to obtain `int` and `double` values
 /// ​​of texts thanks to the methods
 /// [valueToInt] and [valueToDouble].
-class TextFieldBloc<ExtraData> extends SingleFieldBloc<String, String,
-    TextFieldBlocState<ExtraData?>, ExtraData?> {
+class TextFieldBloc<ExtraData>
+    extends
+        SingleFieldBloc<
+          String,
+          String,
+          TextFieldBlocState<ExtraData?>,
+          ExtraData?
+        > {
   /// ## TextFieldBloc<ExtraData>
   ///
   /// ### Properties:
@@ -46,37 +52,37 @@ class TextFieldBloc<ExtraData> extends SingleFieldBloc<String, String,
     Suggestions<String>? suggestions,
     ExtraData? extraData,
   }) : super(
-          validators: validators,
-          asyncValidators: asyncValidators,
-          asyncValidatorDebounceTime: asyncValidatorDebounceTime,
-          initialState: TextFieldBlocState(
-            isValueChanged: false,
-            initialValue: initialValue,
-            updatedValue: initialValue,
-            value: initialValue,
-            error: FieldBlocUtils.getInitialStateError(
-              validators: validators,
-              value: initialValue,
-            ),
-            isDirty: false,
-            suggestions: suggestions,
-            isValidated: FieldBlocUtils.getInitialIsValidated(
-              FieldBlocUtils.getInitialStateIsValidating(
-                asyncValidators: asyncValidators,
-                validators: validators,
-                value: initialValue,
-              ),
-            ),
-            isValidating: FieldBlocUtils.getInitialStateIsValidating(
-              asyncValidators: asyncValidators,
-              validators: validators,
-              value: initialValue,
-            ),
-            name: FieldBlocUtils.generateName(name),
-            toJson: (value) => value,
-            extraData: extraData,
-          ),
-        );
+         validators: validators,
+         asyncValidators: asyncValidators,
+         asyncValidatorDebounceTime: asyncValidatorDebounceTime,
+         initialState: TextFieldBlocState(
+           isValueChanged: false,
+           initialValue: initialValue,
+           updatedValue: initialValue,
+           value: initialValue,
+           error: FieldBlocUtils.getInitialStateError(
+             validators: validators,
+             value: initialValue,
+           ),
+           isDirty: false,
+           suggestions: suggestions,
+           isValidated: FieldBlocUtils.getInitialIsValidated(
+             FieldBlocUtils.getInitialStateIsValidating(
+               asyncValidators: asyncValidators,
+               validators: validators,
+               value: initialValue,
+             ),
+           ),
+           isValidating: FieldBlocUtils.getInitialStateIsValidating(
+             asyncValidators: asyncValidators,
+             validators: validators,
+             value: initialValue,
+           ),
+           name: FieldBlocUtils.generateName(name),
+           toJson: (value) => value,
+           extraData: extraData,
+         ),
+       );
 
   /// Return the parsed `value` to `int` of the current state.
   ///

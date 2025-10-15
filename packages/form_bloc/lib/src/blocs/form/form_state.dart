@@ -27,7 +27,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   }
 
   @Deprecated(
-      'In favour of [FormBloc.hasInitialValues] or [FormBloc.isValuesChanged].')
+    'In favour of [FormBloc.hasInitialValues] or [FormBloc.isValuesChanged].',
+  )
   bool isInitial([int? step]) {
     return FormBlocUtils.hasInitialValues(flatFieldBlocs(step) ?? const []);
   }
@@ -107,14 +108,14 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// States by step
   late final Map<int, Map<String, dynamic>> _fieldBlocsStatesByStepMap =
       _fieldBlocs.map((key, value) {
-    return MapEntry(key, FormBlocUtils.fieldBlocsToFieldBlocsStates(value));
-  });
+        return MapEntry(key, FormBlocUtils.fieldBlocsToFieldBlocsStates(value));
+      });
 
   /// All states of all steps
   late final Map<String, dynamic> _fieldBlocsStates =
       FormBlocUtils.fieldBlocsToFieldBlocsStates({
-    for (final stepFieldBlocs in _fieldBlocs.values) ...stepFieldBlocs,
-  });
+        for (final stepFieldBlocs in _fieldBlocs.values) ...stepFieldBlocs,
+      });
 
   /// Returns `true` if the [FormBloc] contains [fieldBloc]
   bool contains(FieldBloc fieldBloc, {int? step, bool deep = true}) {
@@ -126,16 +127,18 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// Returns the value of [FieldBloc] that has this [name].
   T? valueOf<T>(String name) {
     return FormBlocUtils.getValueOfFieldBlocsStates(
-      path: name,
-      fieldBlocsStates: _fieldBlocsStates,
-    ) as T?;
+          path: name,
+          fieldBlocsStates: _fieldBlocsStates,
+        )
+        as T?;
   }
 
   List<T>? valueListOf<T>(String name) {
     return (FormBlocUtils.getValueOfFieldBlocsStates(
-      path: name,
-      fieldBlocsStates: _fieldBlocsStates,
-    ) as List<dynamic>?)
+              path: name,
+              fieldBlocsStates: _fieldBlocsStates,
+            )
+            as List<dynamic>?)
         ?.cast<T>();
   }
 
@@ -145,9 +148,10 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
 
   Map<String, T>? valueMapOf<T>(String name) {
     return (FormBlocUtils.getValueOfFieldBlocsStates(
-      path: name,
-      fieldBlocsStates: _fieldBlocsStates,
-    ) as Map<String, dynamic>?)
+              path: name,
+              fieldBlocsStates: _fieldBlocsStates,
+            )
+            as Map<String, dynamic>?)
         ?.cast<String, T>();
   }
 
@@ -166,7 +170,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
 
     if (_fieldBlocs.containsKey(step)) {
       return FormBlocUtils.fieldBlocsStatesToJson(
-          _fieldBlocsStatesByStepMap[step]!);
+        _fieldBlocsStatesByStepMap[step]!,
+      );
     }
 
     return const <String, dynamic>{};
@@ -181,8 +186,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   }
 
   InputFieldBloc<Value, ExtraData>? inputFieldBlocOf<Value, ExtraData>(
-          String name) =>
-      _singleFieldBlocOf(name);
+    String name,
+  ) => _singleFieldBlocOf(name);
 
   TextFieldBloc<ExtraData>? textFieldBlocOf<ExtraData>(String name) =>
       _singleFieldBlocOf(name);
@@ -191,19 +196,19 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
       _singleFieldBlocOf(name);
 
   SelectFieldBloc<Value, ExtraData>? selectFieldBlocOf<Value, ExtraData>(
-          String name) =>
-      _singleFieldBlocOf(name);
+    String name,
+  ) => _singleFieldBlocOf(name);
 
   MultiSelectFieldBloc<Value, ExtraData>?
-      multiSelectFieldBlocOf<Value, ExtraData>(String name) =>
-          _singleFieldBlocOf(name);
+  multiSelectFieldBlocOf<Value, ExtraData>(String name) =>
+      _singleFieldBlocOf(name);
 
   GroupFieldBloc? groupFieldBlocOf(String name) =>
       _fieldBlocOf<GroupFieldBloc>(name);
 
   ListFieldBloc<T, dynamic>? listFieldBlocOf<T extends FieldBloc>(
-          String name) =>
-      _fieldBlocOf<ListFieldBloc<T, dynamic>>(name);
+    String name,
+  ) => _fieldBlocOf<ListFieldBloc<T, dynamic>>(name);
 
   /// Returns `true` if the state is
   /// [FormBlocLoaded] or [FormBlocFailure] or
@@ -243,8 +248,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
     required this.isEditing,
     required Map<int, Map<String, FieldBloc>> fieldBlocs,
     required this.currentStep,
-  })  : _isValidByStep = isValidByStep,
-        _fieldBlocs = fieldBlocs;
+  }) : _isValidByStep = isValidByStep,
+       _fieldBlocs = fieldBlocs;
 
   /// Returns a [FormBlocLoading]
   /// {@template form_bloc.copy_to_form_bloc_state}
@@ -262,7 +267,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
       isEditing: isEditing,
       fieldBlocs: _fieldBlocs,
       currentStep: currentStep,
-      progress: progress ??
+      progress:
+          progress ??
           (state is FormBlocLoading<SuccessResponse, FailureResponse>
               ? state.progress
               : 0.0),
@@ -273,13 +279,15 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// {@macro form_bloc.copy_to_form_bloc_state}
   ///
   /// {@macro form_bloc.form_state.FormBlocLoadFailed}
-  FormBlocState<SuccessResponse, FailureResponse> toLoadFailed(
-      {FailureResponse? failureResponse}) {
+  FormBlocState<SuccessResponse, FailureResponse> toLoadFailed({
+    FailureResponse? failureResponse,
+  }) {
     final state = this;
     return FormBlocLoadFailed(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
-      failureResponse: failureResponse ??
+      failureResponse:
+          failureResponse ??
           (state is FormBlocLoadFailed<SuccessResponse, FailureResponse>
               ? state.failureResponse
               : null),
@@ -293,11 +301,11 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   ///
   /// {@macro form_bloc.form_state.FormBlocLoaded}
   FormBlocState<SuccessResponse, FailureResponse> toLoaded() => FormBlocLoaded(
-        isValidByStep: _isValidByStep,
-        isEditing: isEditing,
-        fieldBlocs: _fieldBlocs,
-        currentStep: currentStep,
-      );
+    isValidByStep: _isValidByStep,
+    isEditing: isEditing,
+    fieldBlocs: _fieldBlocs,
+    currentStep: currentStep,
+  );
 
   /// Returns a [FormBlocSubmitting]
   /// {@macro form_bloc.copy_to_form_bloc_state}
@@ -308,13 +316,15 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   ///
   /// * If [progress] is less than 0, it will become 0.0
   /// * If [progress] is greater than 1, it will become 1.0
-  FormBlocState<SuccessResponse, FailureResponse> toSubmitting(
-      {double? progress}) {
+  FormBlocState<SuccessResponse, FailureResponse> toSubmitting({
+    double? progress,
+  }) {
     final state = this;
     return FormBlocSubmitting(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
-      progress: progress ??
+      progress:
+          progress ??
           (state is FormBlocSubmitting<SuccessResponse, FailureResponse>
               ? state.progress
               : 0.0),
@@ -339,11 +349,13 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
       isValidByStep: _isValidByStep,
       isEditing: isEditing ?? this.isEditing,
       successResponse: successResponse,
-      canSubmitAgain:
-          currentStep < (numberOfSteps - 1) ? true : (canSubmitAgain ?? false),
+      canSubmitAgain: currentStep < (numberOfSteps - 1)
+          ? true
+          : (canSubmitAgain ?? false),
       fieldBlocs: _fieldBlocs,
-      currentStep:
-          currentStep < (numberOfSteps - 1) ? currentStep + 1 : currentStep,
+      currentStep: currentStep < (numberOfSteps - 1)
+          ? currentStep + 1
+          : currentStep,
       stepCompleted: currentStep,
     );
   }
@@ -359,7 +371,8 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
     return FormBlocFailure(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
-      failureResponse: failureResponse ??
+      failureResponse:
+          failureResponse ??
           (state is FormBlocFailure<SuccessResponse, FailureResponse>
               ? state.failureResponse
               : null),
@@ -384,13 +397,15 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// {@macro form_bloc.copy_to_form_bloc_state}
   ///
   /// {@macro form_bloc.form_state.FormBlocDeleteFailed}
-  FormBlocState<SuccessResponse, FailureResponse> toDeleteFailed(
-      {FailureResponse? failureResponse}) {
+  FormBlocState<SuccessResponse, FailureResponse> toDeleteFailed({
+    FailureResponse? failureResponse,
+  }) {
     final state = this;
     return FormBlocDeleteFailed(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
-      failureResponse: failureResponse ??
+      failureResponse:
+          failureResponse ??
           (state is FormBlocDeleteFailed<SuccessResponse, FailureResponse>
               ? state.failureResponse
               : null),
@@ -403,13 +418,15 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// {@macro form_bloc.copy_to_form_bloc_state}
   ///
   /// {@macro form_bloc.form_state.FormBlocDeleteSuccessful}
-  FormBlocState<SuccessResponse, FailureResponse> toDeleteSuccessful(
-      {SuccessResponse? successResponse}) {
+  FormBlocState<SuccessResponse, FailureResponse> toDeleteSuccessful({
+    SuccessResponse? successResponse,
+  }) {
     final state = this;
     return FormBlocDeleteSuccessful(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
-      successResponse: successResponse ??
+      successResponse:
+          successResponse ??
           (state is FormBlocDeleteSuccessful<SuccessResponse, FailureResponse>
               ? state.successResponse
               : null),
@@ -422,15 +439,17 @@ abstract class FormBlocState<SuccessResponse, FailureResponse>
   /// {@macro form_bloc.copy_to_form_bloc_state}
   ///
   /// {@macro form_bloc.form_state.FormBlocUpdatingFields}
-  FormBlocState<SuccessResponse, FailureResponse> toUpdatingFields(
-      {double? progress}) {
+  FormBlocState<SuccessResponse, FailureResponse> toUpdatingFields({
+    double? progress,
+  }) {
     final state = this;
     return FormBlocUpdatingFields(
       isValidByStep: _isValidByStep,
       isEditing: isEditing,
       fieldBlocs: _fieldBlocs,
       currentStep: currentStep,
-      progress: progress ??
+      progress:
+          progress ??
           (state is FormBlocUpdatingFields<SuccessResponse, FailureResponse>
               ? state.progress
               : 0.0),
@@ -618,28 +637,26 @@ class FormBlocLoading<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
     double progress = 0.0,
-  })  : assert(progress >= 0.0 && progress <= 0.0),
-        progress = progress.clamp(0.0, 1.0),
-        super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+  }) : assert(progress >= 0.0 && progress <= 0.0),
+       progress = progress.clamp(0.0, 1.0),
+       super(
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-        progress,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+    progress,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  loadingProgress: $progress',
-      );
+  String toString() => _toStringWith(',\n  loadingProgress: $progress');
 }
 
 /// {@template form_bloc.form_state.FormBlocLoadFailed}
@@ -665,25 +682,23 @@ class FormBlocLoadFailed<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        failureResponse,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    failureResponse,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  failureResponse: $failureResponse',
-      );
+  String toString() => _toStringWith(',\n  failureResponse: $failureResponse');
 }
 
 /// {@template form_bloc.form_state.FormBlocLoaded}
@@ -700,19 +715,19 @@ class FormBlocLoaded<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 }
 
 /// {@template form_bloc.form_state.FormBlocSubmitting}
@@ -741,30 +756,30 @@ class FormBlocSubmitting<SuccessResponse, FailureResponse>
     this.isCanceling = false,
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
-  })  : assert(progress >= 0.0 && progress <= 1.0),
-        progress = progress.clamp(0.0, 1.0),
-        super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+  }) : assert(progress >= 0.0 && progress <= 1.0),
+       progress = progress.clamp(0.0, 1.0),
+       super(
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        progress,
-        isCanceling,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    progress,
+    isCanceling,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 
   @override
   String toString() => _toStringWith(
-        ',\n  isCancelling: $isCanceling'
-        ',\n  submissionProgress: $progress',
-      );
+    ',\n  isCancelling: $isCanceling'
+    ',\n  submissionProgress: $progress',
+  );
 }
 
 /// {@template form_bloc.form_state.FormBlocSuccess}
@@ -794,28 +809,28 @@ class FormBlocSuccess<SuccessResponse, FailureResponse>
     int currentStep = 0,
     this.stepCompleted = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        successResponse,
-        isEditing,
-        canSubmitAgain,
-        _fieldBlocs,
-        currentStep,
-        stepCompleted,
-      ];
+    _isValidByStep,
+    successResponse,
+    isEditing,
+    canSubmitAgain,
+    _fieldBlocs,
+    currentStep,
+    stepCompleted,
+  ];
 
   @override
   String toString() => _toStringWith(
-        ',\n  stepCompleted: $stepCompleted'
-        ',\n  successResponse: $successResponse',
-      );
+    ',\n  stepCompleted: $stepCompleted'
+    ',\n  successResponse: $successResponse',
+  );
 }
 
 /// {@template form_bloc.form_state.FormBlocFailure}
@@ -841,25 +856,23 @@ class FormBlocFailure<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        failureResponse,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    failureResponse,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  failureResponse: $failureResponse',
-      );
+  String toString() => _toStringWith(',\n  failureResponse: $failureResponse');
 }
 
 /// {@template form_bloc.form_state.FormBlocSubmissionCancelled}
@@ -878,19 +891,19 @@ class FormBlocSubmissionCancelled<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 }
 
 /// {@template form_bloc.form_state.FormBlocSubmissionFailed}
@@ -905,19 +918,19 @@ class FormBlocSubmissionFailed<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 }
 
 /// {@template form_bloc.form_state.FormBlocDeleting}
@@ -933,28 +946,26 @@ class FormBlocDeleting<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
     double progress = 0.0,
-  })  : assert(progress >= 0.0 && progress <= 1.0),
-        progress = progress.clamp(0.0, 1.0),
-        super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+  }) : assert(progress >= 0.0 && progress <= 1.0),
+       progress = progress.clamp(0.0, 1.0),
+       super(
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-        progress,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+    progress,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  deletingProgress: $progress',
-      );
+  String toString() => _toStringWith(',\n  deletingProgress: $progress');
 }
 
 /// {@template form_bloc.form_state.FormBlocDeleteFailed}
@@ -980,25 +991,23 @@ class FormBlocDeleteFailed<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        failureResponse,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    failureResponse,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  failureResponse: $failureResponse',
-      );
+  String toString() => _toStringWith(',\n  failureResponse: $failureResponse');
 }
 
 /// {@template form_bloc.form_state.FormBlocDeleteSuccessful}
@@ -1024,25 +1033,23 @@ class FormBlocDeleteSuccessful<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
   }) : super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        successResponse,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-      ];
+    _isValidByStep,
+    successResponse,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  successResponse: $successResponse',
-      );
+  String toString() => _toStringWith(',\n  successResponse: $successResponse');
 }
 
 /// {@template form_bloc.form_state.FormBlocUpdatingFields}
@@ -1065,26 +1072,24 @@ class FormBlocUpdatingFields<SuccessResponse, FailureResponse>
     Map<int, Map<String, FieldBloc>> fieldBlocs = const {},
     int currentStep = 0,
     required double progress,
-  })  : assert(progress >= 0.0 && progress <= 1.0),
-        progress = progress.clamp(0.0, 1.0),
-        super(
-          isValidByStep: isValidByStep,
-          isEditing: isEditing,
-          fieldBlocs: fieldBlocs,
-          currentStep: currentStep,
-        );
+  }) : assert(progress >= 0.0 && progress <= 1.0),
+       progress = progress.clamp(0.0, 1.0),
+       super(
+         isValidByStep: isValidByStep,
+         isEditing: isEditing,
+         fieldBlocs: fieldBlocs,
+         currentStep: currentStep,
+       );
 
   @override
   List<Object?> get props => [
-        _isValidByStep,
-        isEditing,
-        _fieldBlocs,
-        currentStep,
-        progress,
-      ];
+    _isValidByStep,
+    isEditing,
+    _fieldBlocs,
+    currentStep,
+    progress,
+  ];
 
   @override
-  String toString() => _toStringWith(
-        ',\n  updatingFieldsProgress: $progress',
-      );
+  String toString() => _toStringWith(',\n  updatingFieldsProgress: $progress');
 }

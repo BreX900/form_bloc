@@ -20,10 +20,7 @@ void main() {
           fieldBlocs: [boolean2],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.removeFieldBlocsWhere((element) => element.state.name == '1');
       });
@@ -51,7 +48,9 @@ void main() {
         final boolean2 = BooleanFieldBloc<Object>(name: '2');
 
         final list = ListFieldBloc<BooleanFieldBloc<Object>, dynamic>(
-            fieldBlocs: [boolean1, boolean2], name: 'list');
+          fieldBlocs: [boolean1, boolean2],
+          name: 'list',
+        );
 
         final expected = createListState<BooleanFieldBloc<Object>, dynamic>(
           name: 'list',
@@ -98,10 +97,7 @@ void main() {
           fieldBlocs: [],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.clearFieldBlocs();
       });
@@ -122,10 +118,7 @@ void main() {
           fieldBlocs: [boolean1, boolean2],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.insertFieldBloc(boolean1, 0);
       });
@@ -145,10 +138,7 @@ void main() {
           fieldBlocs: [boolean1, boolean2, boolean3],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.insertFieldBlocs([boolean1, boolean2], 0);
       });
@@ -185,10 +175,7 @@ void main() {
           fieldBlocs: [boolean2, boolean1],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.updateFieldBlocs([boolean2, boolean1]);
       });
@@ -207,10 +194,7 @@ void main() {
           fieldBlocs: [],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.updateFieldBlocs([]);
       });
@@ -229,10 +213,7 @@ void main() {
           fieldBlocs: [boolean1, boolean2],
         );
 
-        expect(
-          list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
-        );
+        expect(list.stream, emitsInOrder(<ListFieldBlocState>[expected]));
 
         list.updateFieldBlocs([boolean1, boolean2]);
       });
